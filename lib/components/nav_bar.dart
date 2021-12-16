@@ -33,7 +33,7 @@ class NavBar extends ConsumerWidget implements PreferredSizeWidget {
               children: <Widget>[
                 Visibility(
                   child: Icon(
-                    Icons.calendar_today_rounded,
+                    Icons.sync,
                     size: 36.0,
                   ),
                   visible: isIconVisible!,

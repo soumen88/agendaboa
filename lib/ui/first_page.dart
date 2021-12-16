@@ -1,15 +1,18 @@
-import 'package:agendaboa/components/nav_bar.dart';
+import 'package:agendaboa/models/message.dart';
+import 'package:agendaboa/models/message_dao.dart';
 import 'package:agendaboa/providers/providers.dart';
-
-import 'package:auto_route/auto_route.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-
+import 'dart:developer' as developer;
 
 class FirstPage extends HookWidget{
+  final messageDao = MessageDao();
+  String TAG = "FirstPage";
+  final dbRef = FirebaseDatabase.instance.reference().child("messages");
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -30,8 +33,21 @@ class FirstPage extends HookWidget{
                   fontSize: 28
                 ),),
                 ElevatedButton(onPressed: (){
-                  context.read(counterProvider).increment();
-                }, child: Text("Increment"))
+                  //context.read(counterProvider).increment();
+
+
+                }, child: Text("Increment")),
+                ElevatedButton(onPressed: (){
+                  //context.read(counterProvider).increment();
+                  _sendMessage();
+
+                }, child: Text("Save")),
+                ElevatedButton(onPressed: (){
+                  //context.read(counterProvider).increment();
+                  _getDataMessage();
+
+                }, child: Text("Get Data")),
+                _getMessageList(),
               ],
             );
           },
@@ -39,6 +55,39 @@ class FirstPage extends HookWidget{
       ),
 
     );
+  }
+
+  void _sendMessage() {
+    final message = Message("Helol", DateTime.now());
+    messageDao.saveMessage(message);
+  }
+
+  void _getDataMessage() async{
+    final data = await dbRef.once();
+    developer.log(TAG, name: "Message received $data");
+    final json = data as Map<dynamic, dynamic>;
+    final message = Message.fromJson(json);
+    developer.log(TAG, name: "Message received $message");
+
+
+  }
+
+  Widget _getMessageList() {
+    return Expanded(
+      child: FirebaseAnimatedList(
+        query: messageDao.getMessageQuery(),
+        itemBuilder: (context, snapshot, animation, index) {
+          final json = snapshot.value as Map<dynamic, dynamic>;
+          final message = Message.fromJson(json);
+          return Text(message.text);
+        },
+      ),
+    );
+  }
+
+  //get firestore instance
+  getDriversList() async {
+    return await FirebaseDatabase.instance.reference().child('messages');
   }
 
 }

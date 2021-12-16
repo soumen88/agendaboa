@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "145253675772",
+    "project_id": "agendaboa-41f42",
+    "storage_bucket": "agendaboa-41f42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145253675772:android:f9b3438448769331641d79",
+        "android_client_info": {
+          "package_name": "com.example.agendaboa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145253675772-6dvj58p3amc816i4kms3jmgcg1chmdne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.agendaboa",
+            "certificate_hash": "b14e6be848b7eb44a91353cbae08d9429b0877ce"
+          }
+        },
+        {
+          "client_id": "145253675772-roro3bqs1cs5o4u328i1mqss67m6fjlp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEq0R4PLz3mHj5Blk5xx8n3lea5nO5uiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145253675772-roro3bqs1cs5o4u328i1mqss67m6fjlp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
