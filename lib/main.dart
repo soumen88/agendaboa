@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       title: "AgendaBoa",
       routeInformationParser: _appRouter.defaultRouteParser(),
       routerDelegate: _appRouter.delegate(),
-      builder: (context, router) => router!,
+      //builder: (context, router) => router!,
     );
   }
 }

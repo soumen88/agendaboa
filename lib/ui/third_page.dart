@@ -13,7 +13,7 @@ class ThirdPage extends HookWidget{
         isIconVisible: false,
       ),
       body: Center(
-        child: Text("You are in second page"),
+        child: Text("You are in Third page"),
       ),
     );
   }
