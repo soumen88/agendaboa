@@ -10,33 +10,27 @@ import 'package:auto_route/auto_route.dart';
   routes: [
     AutoRoute(path: '/', page: HomePage, children: [
       AutoRoute(
-        path: 'posts',
-        name: 'PostsRouter',
-        page: EmptyRouterPage,
+        path: 'firstPage',
+        name: 'firstPageRouter',
+        page: FirstPage,
         children: [
-          AutoRoute(
-            path: '',
-            page: FirstPage,
-          ),
-          AutoRoute(
-            path: ':postId',
-            page: SecondPage,
-          )
+          RedirectRoute(path: '*', redirectTo: ''),
         ],
       ),
       AutoRoute(
-        path: 'posts',
-        name: 'UsersRouter',
-        page: EmptyRouterPage,
+        path: 'secondPage',
+        name: 'secondPageRouter',
+        page: SecondPage,
         children: [
-          AutoRoute(
-            path: '',
-            page: FirstPage,
-          ),
-          AutoRoute(
-            path: ':postId',
-            page: SecondPage,
-          ),
+          RedirectRoute(path: '*', redirectTo: ''),
+        ],
+      ),
+      AutoRoute(
+        path: 'thirdPage',
+        name: 'thirdPageRouter',
+        page: ThirdPage,
+        children: [
+          RedirectRoute(path: '*', redirectTo: ''),
         ],
       ),
     ]),
