@@ -20,7 +20,7 @@ class HomePage extends HookWidget{
 
     useEffect((){
       developer.log(TAG, name: "Inside use effect");
-      Firebase.initializeApp();
+      //Firebase.initializeApp();
     });
     // TODO: implement build
     return Consumer(

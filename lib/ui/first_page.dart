@@ -57,18 +57,23 @@ class FirstPage extends HookWidget{
     );
   }
 
-  void _sendMessage() {
-    final message = Message("Helol", DateTime.now());
-    messageDao.saveMessage(message);
+  void _sendMessage() async{
+    final message = Message("Testing for return", DateTime.now().toString());
+    var result =  await messageDao.saveMessage(message);
+    developer.log(TAG, name: "This is the result $result");
   }
 
   void _getDataMessage() async{
-    final data = await dbRef.once();
-    developer.log(TAG, name: "Message received $data");
-    final json = data as Map<dynamic, dynamic>;
-    final message = Message.fromJson(json);
-    developer.log(TAG, name: "Message received $message");
-
+    try{
+      final data = await dbRef.once();
+      developer.log(TAG, name: "Message received $data");
+      final json = data.snapshot.value as Map<dynamic, dynamic>;
+      final message = Message.fromJson(json);
+      developer.log(TAG, name: "Message received $message");
+    }
+    catch(e){
+      developer.log(TAG , name: "Exception $e ");
+    }
 
   }
 

@@ -1,12 +1,17 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'message.dart';
+import 'dart:developer' as developer;
 
 class MessageDao {
-  final DatabaseReference _messagesRef =
-  FirebaseDatabase.instance.reference().child('messages');
+  String TAG = "MessageDao";
+  //final DatabaseReference _messagesRef = FirebaseDatabase.instance.reference().child('messages');
+  final DatabaseReference _messagesRef = FirebaseDatabase.instance.ref('messages');
 
-  void saveMessage(Message message) {
-    _messagesRef.push().set(message.toJson());
+  Future<String> saveMessage(Message message) async{
+    var key = _messagesRef.push();
+    developer.log(TAG, name: "Key found ${key.key}");
+    await key.set(message.toJson());
+    return Future.value(key.key);
   }
 
   Query getMessageQuery() {
