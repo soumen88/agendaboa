@@ -37,6 +37,7 @@ class HomePage extends HookWidget{
             ThirdPageRouter()
           ],
           bottomNavigationBuilder: (_, tabsRouter) {
+
             return SalomonBottomBar(
               margin: const EdgeInsets.symmetric(
                 horizontal: 20,

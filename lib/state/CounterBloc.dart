@@ -35,8 +35,8 @@ class CounterBloc extends ChangeNotifier with PageNotifierBloc{
     counterPageOne = 0;
     counterPageTwo = 0;
     counterPageThree = 0;
-    currentPageIndex = 0;
-    currentPage = "First";
+    //currentPageIndex = 0;
+    //currentPage = "First";
     notifyListeners();
   }
 
