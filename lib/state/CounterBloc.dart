@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:agendaboa/constants.dart';
@@ -6,15 +7,18 @@ import 'package:agendaboa/models/PageDetails.dart';
 import 'package:agendaboa/models/message_dao.dart';
 import 'package:agendaboa/network/firebase_dao.dart';
 import 'package:agendaboa/state/PageNotifierBloc.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer' as developer;
 
+//Below class is responsible for displaying count across all the screens
 class CounterBloc extends ChangeNotifier with PageNotifierBloc{
   String TAG = "CounterBloc";
 
   CounterBloc(){
     currentPage = "First";
+    setupListener();
     saveFirstTimeDetails();
     //restart();
   }
@@ -24,6 +28,7 @@ class CounterBloc extends ChangeNotifier with PageNotifierBloc{
   final messageDao = MessageDao();
   final firebaseDao = FirebaseDao();
   bool isLoadingComplete = false;
+  late StreamSubscription<DatabaseEvent> _onTodoChangedSubscription;
 
   void restart(){
     resetDetailsOnServer();
@@ -36,7 +41,9 @@ class CounterBloc extends ChangeNotifier with PageNotifierBloc{
   }
 
   void increment(){
+      isLoadingComplete = false;
       var pageNumber = currentPageIndex + 1;
+      developer.log(TAG, name: "Page number $pageNumber and counter one $counterPageOne ");
       switch(currentPageIndex){
         case 0:
           counterPageOne++;
@@ -53,7 +60,7 @@ class CounterBloc extends ChangeNotifier with PageNotifierBloc{
         default:
           break;
       }
-      notifyListeners();
+     notifyListeners();
   }
 
   void saveFirstTimeDetails() async{
@@ -82,11 +89,13 @@ class CounterBloc extends ChangeNotifier with PageNotifierBloc{
 
   void readSavedDetailsFromServer() async{
     try{
-      final data = await firebaseDao.getQuery().once();
-      final values = data.snapshot.value as Map<dynamic, dynamic>;
-
-      values.forEach((key, value) {
-        List<dynamic> valueList = List.from(value);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? firebaseKey = prefs.getString(UNIQUE_KEY);
+      if(firebaseKey != null && firebaseKey.isNotEmpty){
+        final dataSnapshot = await firebaseDao.getQuery().once();
+        final values = dataSnapshot.snapshot.value as Map<dynamic, dynamic>;
+        final savedValues =  values[firebaseKey];
+        List<dynamic> valueList = List.from(savedValues);
         valueList.removeWhere((element) => element == null);
 
         for(var item in valueList){
@@ -108,7 +117,8 @@ class CounterBloc extends ChangeNotifier with PageNotifierBloc{
             break;
           }
         }
-      });
+      }
+
     }
     catch(e){
       developer.log(TAG , name: "Exception $e ");
@@ -142,5 +152,14 @@ class CounterBloc extends ChangeNotifier with PageNotifierBloc{
     }
   }
 
+  void setupListener(){
+    _onTodoChangedSubscription =
+        firebaseDao.getQuery().onChildChanged.listen(onEntryChanged);
+  }
 
+  onEntryChanged(DatabaseEvent event) {
+    developer.log(TAG, name: "Event $event");
+    isLoadingComplete = true;
+    notifyListeners();
+  }
 }

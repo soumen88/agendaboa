@@ -50,25 +50,28 @@ class HomePage extends HookWidget{
               },
               items: [
                 SalomonBottomBarItem(
-                  selectedColor: Colors.amberAccent,
+                  selectedColor: Colors.white,
                   icon: const Icon(
                     Icons.post_add,
+                    color: Colors.white,
                     size: 30,
                   ),
                   title: const Text('Page 1'),
                 ),
                 SalomonBottomBarItem(
-                  selectedColor: Colors.blue[200],
+                  selectedColor: Colors.white,
                   icon: const Icon(
-                    Icons.person,
+                    Icons.post_add,
+                    color: Colors.white,
                     size: 30,
                   ),
                   title: const Text('Page 2'),
                 ),
                 SalomonBottomBarItem(
-                  selectedColor: Colors.blue[200],
+                  selectedColor: Colors.white,
                   icon: const Icon(
-                    Icons.person,
+                    Icons.post_add,
+                    color: Colors.white,
                     size: 30,
                   ),
                   title: const Text('Page 3'),

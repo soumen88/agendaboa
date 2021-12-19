@@ -11,7 +11,6 @@ class FirebaseDao {
   Future<String> saveFirstTimeDetails(List<PageDetails> pageDetailsList) async{
     String uniqueKey = "";
     var key = _detailsRef.push();
-
     uniqueKey = key.key!;
     for(PageDetails pageDetails in pageDetailsList){
       var pageDetailsJson = pageDetails.toJson();
@@ -24,11 +23,20 @@ class FirebaseDao {
   Future<bool> savePageDetails(String key, PageDetails pageDetails) async{
     var pageDetailsJson = pageDetails.toJson();
     await _detailsRef.child(key).child(pageDetails.pageKey.toString()).set(pageDetailsJson);
+
     return Future.value(true);
+  }
+
+  Future<DatabaseReference> getPageDetails(String key) async{
+    var ref = await _detailsRef.child(key);
+    return Future.value(ref);
   }
 
   Query getQuery() {
     return _detailsRef;
   }
+
+  DatabaseReference get getDBReference =>_detailsRef;
+
 
 }
