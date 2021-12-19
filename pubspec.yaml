@@ -44,6 +44,7 @@ dependencies:
   flutter_riverpod: ^0.14.0+3
   flutter_bloc: ^7.3.1
   salomon_bottom_bar: ^3.1.0
+  built_value: ^8.1.2
 
 dev_dependencies:
   flutter_test:
@@ -60,7 +61,9 @@ dev_dependencies:
   built_value_generator: ^8.1.2
   auto_route_generator: ^3.0.1
   provider: ^6.0.1
-
+  json_serializable: ^5.0.2
+  json_annotation: ^4.1.0
+  connectivity_plus: ^2.0.2
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

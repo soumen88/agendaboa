@@ -1,3 +1,4 @@
+import 'package:agendaboa/models/CounterDetails.dart';
 import 'package:agendaboa/models/message.dart';
 import 'package:agendaboa/models/message_dao.dart';
 import 'package:agendaboa/providers/providers.dart';
@@ -44,9 +45,14 @@ class FirstPage extends HookWidget{
                 }, child: Text("Save")),
                 ElevatedButton(onPressed: (){
                   //context.read(counterProvider).increment();
-                  _getDataMessage();
+                  context.read(counterProvider).updateDetailsOnServer();
 
-                }, child: Text("Get Data")),
+                }, child: Text("Update Data")),
+                ElevatedButton(onPressed: (){
+                  //context.read(counterProvider).increment();
+                  context.read(counterProvider).saveFirstTimeDetails();
+
+                }, child: Text("Save First time")),
                 _getMessageList(),
               ],
             );
@@ -61,6 +67,10 @@ class FirstPage extends HookWidget{
     final message = Message("Testing for return", DateTime.now().toString());
     var result =  await messageDao.saveMessage(message);
     developer.log(TAG, name: "This is the result $result");
+  }
+
+  void _testMessage() async{
+
   }
 
   void _getDataMessage() async{
