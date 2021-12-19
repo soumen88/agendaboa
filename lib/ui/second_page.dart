@@ -15,9 +15,19 @@ class SecondPage extends HookWidget{
           builder: (builder, watch, child){
             final pageNumber = watch(counterProvider).currentPage;
             final counterValue = watch(counterProvider).counterPageTwo;
+            final isLoadingComplete = watch(counterProvider).isLoadingComplete;
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Visibility(
+                    visible: !isLoadingComplete,
+                    child: Container(
+                        child: Center(child: CircularProgressIndicator())
+                    )
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Text("You are in $pageNumber page"),
                 SizedBox(
                   height: 20,

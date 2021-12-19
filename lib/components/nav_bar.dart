@@ -62,7 +62,7 @@ class NavBar extends ConsumerWidget implements PreferredSizeWidget {
             ),
             onTap: () {
               developer.log(TAG , name: "Reset details");
-              context.read(counterProvider).resetDetailsOnServer();
+              context.read(counterProvider).restart();
             },
           ),
         ),

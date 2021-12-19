@@ -23,9 +23,19 @@ class FirstPage extends HookWidget{
           builder: (builder, watch, child){
             final pageNumber = watch(counterProvider).currentPage;
             final counterValue = watch(counterProvider).counterPageOne;
+            final isLoadingComplete = watch(counterProvider).isLoadingComplete;
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Visibility(
+                    visible: !isLoadingComplete,
+                    child: Container(
+                        child: Center(child: CircularProgressIndicator())
+                    )
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Text("You are in $pageNumber page"),
                 SizedBox(
                   height: 20,
@@ -34,27 +44,8 @@ class FirstPage extends HookWidget{
                   fontSize: 28
                 ),),
                 ElevatedButton(onPressed: (){
-                  //context.read(counterProvider).increment();
-
-
-                }, child: Text("Increment")),
-                ElevatedButton(onPressed: (){
-                  //context.read(counterProvider).increment();
-                  _sendMessage();
-
-                }, child: Text("Save")),
-                ElevatedButton(onPressed: (){
-                  //context.read(counterProvider).increment();
-                  context.read(counterProvider).readSavedDetailsOnServer();
-
-
-                }, child: Text("read Data")),
-                ElevatedButton(onPressed: (){
-                  //context.read(counterProvider).increment();
-                  context.read(counterProvider).saveFirstTimeDetails();
-
-                }, child: Text("Save First time")),
-                _getMessageList(),
+                  context.read(counterProvider).increment();
+                }, child: Text("Increment"))
               ],
             );
           },

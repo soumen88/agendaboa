@@ -14,21 +14,25 @@ class CounterBloc extends ChangeNotifier with PageNotifierBloc{
   String TAG = "CounterBloc";
 
   CounterBloc(){
+    currentPage = "First";
     saveFirstTimeDetails();
-    restart();
+    //restart();
   }
   int counterPageOne = 0;
   int counterPageTwo = 0;
   int counterPageThree = 0;
   final messageDao = MessageDao();
   final firebaseDao = FirebaseDao();
+  bool isLoadingComplete = false;
 
   void restart(){
+    resetDetailsOnServer();
     counterPageOne = 0;
     counterPageTwo = 0;
     counterPageThree = 0;
     currentPageIndex = 0;
     currentPage = "First";
+    notifyListeners();
   }
 
   void increment(){
@@ -68,11 +72,15 @@ class CounterBloc extends ChangeNotifier with PageNotifierBloc{
       var keyReceived = await firebaseDao.saveFirstTimeDetails(pageDetailsList);
       prefs.setString(UNIQUE_KEY, keyReceived);
       developer.log(TAG, name: "New key created $keyReceived");
+      isLoadingComplete = true;
+      notifyListeners();
     }
-
+    else{
+      readSavedDetailsFromServer();
+    }
   }
 
-  void readSavedDetailsOnServer() async{
+  void readSavedDetailsFromServer() async{
     try{
       final data = await firebaseDao.getQuery().once();
       final values = data.snapshot.value as Map<dynamic, dynamic>;
@@ -82,11 +90,9 @@ class CounterBloc extends ChangeNotifier with PageNotifierBloc{
         valueList.removeWhere((element) => element == null);
 
         for(var item in valueList){
-          //developer.log(TAG, name: "Item only $item");
           var temp = new Map<String, dynamic>.from(item);
           var temp2 = jsonEncode(temp);
           var pageDetails = PageDetails.fromJson(jsonDecode(temp2));
-          developer.log(TAG, name: "Temp only 2 $pageDetails");
           switch(pageDetails.pageKey){
             case "1":{
               counterPageOne = pageDetails.counterDetails!.counterValue!;
@@ -107,6 +113,7 @@ class CounterBloc extends ChangeNotifier with PageNotifierBloc{
     catch(e){
       developer.log(TAG , name: "Exception $e ");
     }
+    isLoadingComplete = true;
     notifyListeners();
   }
 
