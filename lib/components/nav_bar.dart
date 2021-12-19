@@ -1,11 +1,12 @@
 import 'package:agendaboa/constants.dart';
+import 'package:agendaboa/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'dart:developer' as developer;
 
 class NavBar extends ConsumerWidget implements PreferredSizeWidget {
   int counter = 0;
-  String currentScreen  = "navBar";
+  String TAG  = "navBar";
   String? screenName;
   bool? isIconVisible = true;
 
@@ -60,7 +61,8 @@ class NavBar extends ConsumerWidget implements PreferredSizeWidget {
               ],
             ),
             onTap: () {
-
+              developer.log(TAG , name: "Reset details");
+              context.read(counterProvider).resetDetailsOnServer();
             },
           ),
         ),

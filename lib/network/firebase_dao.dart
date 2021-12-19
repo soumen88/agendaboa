@@ -8,7 +8,7 @@ class FirebaseDao {
   //final DatabaseReference _messagesRef = FirebaseDatabase.instance.reference().child('messages');
   final DatabaseReference _detailsRef = FirebaseDatabase.instance.ref('pageDetails');
 
-  Future<String> saveFirstTimeDetails(String uuid , List<PageDetails> pageDetailsList) async{
+  Future<String> saveFirstTimeDetails(List<PageDetails> pageDetailsList) async{
     String uniqueKey = "";
     var key = _detailsRef.push();
 
@@ -25,6 +25,10 @@ class FirebaseDao {
     var pageDetailsJson = pageDetails.toJson();
     await _detailsRef.child(key).child(pageDetails.pageKey.toString()).set(pageDetailsJson);
     return Future.value(true);
+  }
+
+  Query getQuery() {
+    return _detailsRef;
   }
 
 }

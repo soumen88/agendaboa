@@ -10,6 +10,7 @@
 
 import 'package:auto_route/auto_route.dart' as _i5;
 import 'package:flutter/material.dart' as _i6;
+import 'package:flutter/src/widgets/framework.dart' as _i7;
 
 import '../ui/first_page.dart' as _i2;
 import '../ui/home.dart' as _i1;
@@ -82,7 +83,7 @@ class AppRouter extends _i5.RootStackRouter {
 /// generated route for
 /// [_i1.HomePage]
 class HomeRoute extends _i5.PageRouteInfo<HomeRouteArgs> {
-  HomeRoute({_i6.Key? key, List<_i5.PageRouteInfo>? children})
+  HomeRoute({_i7.Key? key, List<_i5.PageRouteInfo>? children})
       : super(HomeRoute.name,
             path: '/',
             args: HomeRouteArgs(key: key),
@@ -94,7 +95,7 @@ class HomeRoute extends _i5.PageRouteInfo<HomeRouteArgs> {
 class HomeRouteArgs {
   const HomeRouteArgs({this.key});
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
   @override
   String toString() {

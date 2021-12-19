@@ -5,7 +5,7 @@ part 'PageDetails.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class PageDetails{
-  int? pageKey;
+  String? pageKey;
   CounterDetails? counterDetails;
 
 

@@ -45,9 +45,10 @@ class FirstPage extends HookWidget{
                 }, child: Text("Save")),
                 ElevatedButton(onPressed: (){
                   //context.read(counterProvider).increment();
-                  context.read(counterProvider).updateDetailsOnServer();
+                  context.read(counterProvider).readSavedDetailsOnServer();
 
-                }, child: Text("Update Data")),
+
+                }, child: Text("read Data")),
                 ElevatedButton(onPressed: (){
                   //context.read(counterProvider).increment();
                   context.read(counterProvider).saveFirstTimeDetails();
